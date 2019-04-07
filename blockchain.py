@@ -74,9 +74,9 @@ class Server:
 
                 idCounter += 1
                 print "client connected"
-                
+
             finally:
-                break
+                pass
 
     def receiving_loop(self, client):
             try:
