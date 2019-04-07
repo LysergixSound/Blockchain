@@ -29,7 +29,7 @@ class Client:
             amount_expected = len(message)
 
             while amount_received < amount_expected:
-                data = sock.recv(16)
+                data = self.sock.recv(16)
                 amount_received += len(data)
                 print >>sys.stderr, 'received "%s"' % data
 
