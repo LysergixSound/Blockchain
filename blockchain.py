@@ -12,7 +12,10 @@ class Client:
         self.sock.connect(self.server_address)
 
         self.send_data()
-        
+
+    def close(self):
+        self.sock.close()
+
     def send_data(self):
         try:
 
@@ -51,6 +54,9 @@ class Server:
         # Start Connection Loop
         self.connection_loop()
 
+    def close(self):
+        self.sock.close()
+
     def connection_loop(self):
         while True:
             # Wait for a connection
@@ -63,7 +69,6 @@ class Server:
                 # Receive the data in small chunks and retransmit it
                 while True:
                     data = connection.recv(16)
-                    print >>sys.stderr, 'received "%s"' % data
                     if data:
                         print >>sys.stderr, 'sending data back to the client'
                         connection.sendall(data)
@@ -75,8 +80,22 @@ class Server:
                 # Clean up the connection
                 connection.close()
 
-if sys.argv[1] != "":
-    if sys.argv[1] == "client":
-        client = Client(sys.argv[2], 6969)
-    elif sys.argv[1] == "server":
-        server = Server(sys.argv[2], 6969)
+if __name__ == '__main__':
+    try:
+        client = ""
+        server = ""
+
+        if sys.argv[1] != "":
+            if sys.argv[1] == "client":
+                client = Client(sys.argv[2], 6969)
+            elif sys.argv[1] == "server":
+                server = Server(sys.argv[2], 6969)
+
+    except KeyboardInterrupt:
+        pass
+    finally:
+        if client != "":
+            client.close()
+        if server != "":
+            server.close()
+        print "Socket Closed"
