@@ -49,7 +49,7 @@ class Client:
 class Server:
     def __init__(self, host, port):
         self.nodes = []
-        self.api = API(2)
+        self.api = API(4)
 
         self.host = host
         self.port = port
