@@ -55,7 +55,7 @@ class Client:
 class Server:
     def __init__(self, host, port):
         self.nodes = []
-        self.api = API()
+        self.api = API(2)
 
         self.host = host
         self.port = port
