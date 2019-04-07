@@ -34,6 +34,6 @@ class API:
                 block.difficulty = self.difficulty
                 break
 
-            counter += 1
+            counter += 3
 
         return block
