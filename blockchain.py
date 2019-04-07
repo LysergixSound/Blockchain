@@ -53,6 +53,7 @@ class Client:
                         break
 
                     counter += 1
+                    time.sleep(1)
 
 
                 print >>sys.stderr, block.toJSON()
