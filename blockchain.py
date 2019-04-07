@@ -41,7 +41,7 @@ class Client:
                 time.sleep(5)
                 counter = 2
                 while True:
-                    proofResult = hex_dig * counter
+                    proofResult = int(hex_dig) * counter
                     proofResult = str(proofResult)
                     print proofResult + "\n"
 
