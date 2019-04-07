@@ -16,6 +16,7 @@ class Client:
 
     def close(self):
         self.sock.close()
+        print "exit"
 
     def send_data(self):
         try:
@@ -57,6 +58,7 @@ class Server:
 
     def close(self):
         self.sock.close()
+        print "exit"
 
     def connection_loop(self):
         while True:
