@@ -1,5 +1,12 @@
 import socket
 import sys
+from threading import Thread
+
+class ClientModel:
+    def __init__(self, id, address, connection):
+        self.id = id
+        self.address = address
+        self.connection = connection
 
 class Client:
     def __init__(self, ip, port):
@@ -18,20 +25,13 @@ class Client:
 
     def send_data(self):
         try:
+            while True:
+                # Send data
+                message = 'heartbeat'
+                print >>sys.stderr, 'sending "%s"' % message
+                self.sock.sendall(message)
 
-            # Send data
-            message = 'This is the message.  It will be repeated.'
-            print >>sys.stderr, 'sending "%s"' % message
-            self.sock.sendall(message)
-
-            # Look for the response
-            amount_received = 0
-            amount_expected = len(message)
-
-            while amount_received < amount_expected:
-                data = self.sock.recv(16)
-                amount_received += len(data)
-                print >>sys.stderr, 'received "%s"' % data
+                time.sleep(2)
 
         finally:
             print >>sys.stderr, 'closing socket'
@@ -40,6 +40,9 @@ class Client:
 
 class Server:
     def __init__(self, ip, port):
+        # Init Lists
+        self.threads = []
+
         # Create a TCP/IP socket
         self.sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
@@ -58,27 +61,34 @@ class Server:
         self.sock.close()
 
     def connection_loop(self):
+        idCounter = 0
         while True:
             # Wait for a connection
-            print >>sys.stderr, 'waiting for a connection'
             connection, client_address = self.sock.accept()
+            newClientThread = self.receiving_loop(ClientModel(idCounter, client_address, connection))
+            newClientThread.start()
+            self.threads.append(newClientThread)
 
+            idCounter += 1
+            print "client connected"
+
+    def receiving_loop(self, client):
             try:
-                print >>sys.stderr, 'connection from', client_address
-
                 # Receive the data in small chunks and retransmit it
                 while True:
-                    data = connection.recv(16)
+                    data = client.connection.recv(1024)
                     if data:
-                        print >>sys.stderr, 'sending data back to the client'
-                        connection.sendall(data)
+                        print >>sys.stderr, "Received " + client.client_address + " ID:" + client.id + ": " + data
                     else:
-                        print >>sys.stderr, 'no more data from', client_address
+                        print >>sys.stderr, 'no more data from', client.client_address
                         break
 
             finally:
                 # Clean up the connection
-                connection.close()
+                client.connection.close()
+
+
+
 
 if __name__ == '__main__':
     try:
