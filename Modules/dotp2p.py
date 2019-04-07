@@ -12,6 +12,7 @@ class API:
         for x in range(0, self.difficulty):
             tempResult = tempResult + "0"
 
+        print proofResult[:self.difficulty]
         if proofResult[:self.difficulty] == tempResult:
             return True
         else:
@@ -30,6 +31,7 @@ class API:
             for x in range(0, self.difficulty):
                 tempResult = tempResult + "0"
 
+            print proofResult[:self.difficulty]
             if proofResult[:self.difficulty] == tempResult:
                 block.proof = counter
                 block.difficulty = self.difficulty
