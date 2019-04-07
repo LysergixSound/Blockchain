@@ -51,7 +51,7 @@ class Client:
                         tempResult = tempResult + "0"
 
                     if proofResult[:difficulty] == tempResult:
-                        block.proof = counter
+                        block.proof = counter + 1
                         block.difficulty = difficulty
                         break
 
