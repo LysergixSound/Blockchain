@@ -1,7 +1,7 @@
 import socket
 import sys
 import time
-from threading import Thread
+import threading
 
 class ClientModel:
     def __init__(self, id, address, connection):
