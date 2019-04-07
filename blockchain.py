@@ -66,7 +66,7 @@ class Server:
         while True:
             # Wait for a connection
             connection, client_address = self.sock.accept()
-            newClientThread = self.receiving_loop(ClientModel(idCounter, client_address, connection))
+            newClientThread = self.receiving_loop(ClientModel(str(idCounter), client_address, connection))
             newClientThread.start()
             self.threads.append(newClientThread)
 
