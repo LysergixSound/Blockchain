@@ -33,7 +33,7 @@ class Client:
     def send_data(self):
         try:
             while True:
-                block = BlockModel("0", "testid", "hello", "")
+                block = BlockModel(hashlib.sha256("0").hexdigest(), "testid", "hello", "")
                 block = self.api.proofOfWork(block)
 
                 print >>sys.stderr, block.toJSON()
