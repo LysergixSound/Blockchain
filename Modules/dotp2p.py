@@ -30,7 +30,7 @@ class API:
             for x in range(0, self.difficulty):
                 tempResult = tempResult + "0"
 
-            if proofResult[:difficulty] == tempResult:
+            if proofResult[:self.difficulty] == tempResult:
                 block.proof = counter
                 block.difficulty = self.difficulty
                 break
