@@ -49,7 +49,7 @@ class Client:
                     for x in range(0, difficulty):
                         tempResult = tempResult + "0"
 
-                    if proofResult[:difficulty] == tempResult:
+                    if proofResult[:2] == tempResult:
                         break
 
                     counter += 1
