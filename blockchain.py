@@ -15,6 +15,8 @@ from Models.blockmodel import BlockModel
 
 class Client:
     def __init__(self, ip, port):
+        self.api = API(4)
+
         # Create a TCP/IP socket
         self.sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
@@ -31,32 +33,8 @@ class Client:
     def send_data(self):
         try:
             while True:
-                # Send data
-                difficulty = 4
-                hash_object = hashlib.sha256('genesis')
-                hex_dig = hash_object.hexdigest()
-
-
-                block = BlockModel(hex_dig, "testid", "hello", "", 0, 1)
-                counter = 0
-                while True:
-                    proofResult = hex_dig + str(counter)
-                    hash_object = hashlib.sha256(proofResult)
-                    proofResult = hash_object.hexdigest()
-
-                    print proofResult[:difficulty] + "\n"
-
-                    tempResult = ""
-                    for x in range(0, difficulty):
-                        tempResult = tempResult + "0"
-
-                    if proofResult[:difficulty] == tempResult:
-                        block.proof = counter + 1
-                        block.difficulty = difficulty
-                        break
-
-                    counter += 1
-
+                block = BlockModel("0", "testid", "hello", "")
+                block = self.api.proofOfWork(block)
 
                 print >>sys.stderr, block.toJSON()
                 self.sock.sendall(block.toJSON())
