@@ -73,7 +73,7 @@ class Server:
                 self.threads.append(newClientThread)
 
                 idCounter += 1
-                print "client connected"
+                print >>sys.stderr, "client connected"
 
             finally:
                 pass
