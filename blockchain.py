@@ -71,7 +71,7 @@ class Server:
 
             finally:
                 # Clean up the connection
-
+                connection.close()
 
 if sys.argv[1] != "":
     if sys.argv[1] != "client":
