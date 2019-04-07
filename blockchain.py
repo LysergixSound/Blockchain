@@ -43,7 +43,7 @@ class Client:
                 while True:
                     proofResult = float.fromhex(hex_dig) * counter
                     proofResult = str(proofResult)
-                    print proofResult + "\n"
+                    print proofResult[2:] + "\n"
 
                     tempResult = ""
                     for x in range(0, 1):
