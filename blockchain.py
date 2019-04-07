@@ -2,12 +2,16 @@ import socket
 import sys
 import time
 import threading
+import json
+import hashlib
+from collections import namedtuple
 
-class ClientModel:
-    def __init__(self, id, address, connection):
-        self.id = id
-        self.address = address
-        self.connection = connection
+import Modules
+from Models.clientmodel import ClientModel
+from Models.blockmodel import BlockModel
+
+
+
 
 class Client:
     def __init__(self, ip, port):
@@ -28,11 +32,20 @@ class Client:
         try:
             while True:
                 # Send data
-                message = 'heartbeat'
-                print >>sys.stderr, 'sending "%s"' % message
-                self.sock.sendall(message)
+                hash_object = hashlib.sha256(b'genesis')
+                hex_dig = hash_object.hexdigest()
 
-                time.sleep(2)
+                block = BlockModel(hex_dig, "testid", "hello", "", 0, 2)
+                print block.toJSON()
+                counter = 2
+                while True:
+                    print hex_dig * counter
+                    counter += 1
+
+                print >>sys.stderr, block.toJSON()
+                self.sock.sendall(block)
+
+                time.sleep(10)
 
         finally:
             print >>sys.stderr, 'closing socket'
@@ -41,6 +54,9 @@ class Client:
 
 class Server:
     def __init__(self, host, port):
+        self.nodes = []
+        self.api = dotp2p.API()
+
         self.host = host
         self.port = port
         self.sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -49,7 +65,7 @@ class Server:
         self.listen()
 
     def listen(self):
-        self.sock.listen(5)
+        self.sock.listen(1024)
         while True:
             client, address = self.sock.accept()
             client.settimeout(60)
@@ -62,8 +78,9 @@ class Server:
                 data = client.recv(size)
                 if data:
                     # Set the response to echo back the recieved data
-                    response = data
-                    print address[0] + ": " + response
+                    block = json.loads(data, object_hook=lambda d: namedtuple('X', d.keys())(*d.values()))
+                    print "Block is "
+                    print self.api.verifiyData(block)
                 else:
                     raise error('Client disconnected')
             except:
