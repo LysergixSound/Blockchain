@@ -74,7 +74,7 @@ class Server:
                 connection.close()
 
 if sys.argv[1] != "":
-    if sys.argv[1] != "client":
+    if sys.argv[1] == "client":
         client = Client(sys.argv[2], 6969)
-    elif sys.argv[1] != "server":
+    elif sys.argv[1] == "server":
         server = Server(sys.argv[2], 6969)
