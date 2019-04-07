@@ -40,59 +40,35 @@ class Client:
 
 
 class Server:
-    def __init__(self, ip, port):
-        # Init Lists
-        self.threads = []
-
-        # Create a TCP/IP socket
+    def __init__(self, host, port):
+        self.host = host
+        self.port = port
         self.sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        self.sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+        self.sock.bind((self.host, self.port))
+        self.listen()
 
-        # Bind the socket to the port
-        self.server_address = (ip, port)
-        print >>sys.stderr, 'starting up on %s port %s' % self.server_address
-        self.sock.bind(self.server_address)
-
-        # Listen for incoming connections
-        self.sock.listen(1000)
-
-        # Start Connection Loop
-        self.connection_loop()
-
-    def close(self):
-        self.sock.close()
-
-    def connection_loop(self):
-        idCounter = 0
+    def listen(self):
+        self.sock.listen(5)
         while True:
+            client, address = self.sock.accept()
+            client.settimeout(60)
+            threading.Thread(target = self.listenToClient,args = (client,address)).start()
 
-            # Wait for a connection
-            connection, client_address = self.sock.accept()
-
+    def listenToClient(self, client, address):
+        size = 1024
+        while True:
             try:
-                newClientThread = self.receiving_loop(ClientModel(str(idCounter), client_address, connection))
-                newClientThread.start()
-                self.threads.append(newClientThread)
-
-                idCounter += 1
-                print >>sys.stderr, "client connected"
-
-            finally:
-                pass
-
-    def receiving_loop(self, client):
-            try:
-                # Receive the data in small chunks and retransmit it
-                while True:
-                    data = client.connection.recv(1024)
-                    if data:
-                        print >>sys.stderr, "Received " + client.address[0] + " ID:" + client.id + ": " + data
-                    else:
-                        print >>sys.stderr, 'no more data from', client.address
-                        break
-
-            finally:
-                # Clean up the connection
-                client.connection.close()
+                data = client.recv(size)
+                if data:
+                    # Set the response to echo back the recieved data
+                    response = data
+                    print address[0] + ": " + response
+                else:
+                    raise error('Client disconnected')
+            except:
+                client.close()
+                return False
 
 
 
