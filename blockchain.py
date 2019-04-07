@@ -32,6 +32,7 @@ class Client:
         try:
             while True:
                 # Send data
+                difficulty = 2
                 hash_object = hashlib.sha256('genesis')
                 hex_dig = hash_object.hexdigest()
 
@@ -45,21 +46,20 @@ class Client:
                     hash_object = hashlib.sha256(proofResult)
                     proofResult = hash_object.hexdigest()
 
-                    print proofResult[:2] + "\n"
+                    print proofResult[:difficulty] + "\n"
 
                     tempResult = ""
-                    for x in range(0, 1):
+                    for x in range(0, difficulty):
                         tempResult = tempResult + "0"
 
-                    if proofResult[:1] == tempResult:
+                    if proofResult[:difficulty] == tempResult:
                         break
 
                     counter += 1
-                    time.sleep(1)
 
 
                 print >>sys.stderr, block.toJSON()
-                self.sock.sendall(block)
+                # self.sock.sendall(block)
 
                 time.sleep(10)
 
