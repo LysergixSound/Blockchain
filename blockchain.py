@@ -1,7 +1,6 @@
 import socket
 import sys
 
-
 class Client:
     def __init__(self, ip, port):
         # Create a TCP/IP socket
@@ -72,3 +71,10 @@ class Server:
 
             finally:
                 # Clean up the connection
+
+
+if sys.argv[1] != "":
+    if sys.argv[1] != "client":
+        client = Client(sys.argv[2], 6969)
+    elif if sys.argv[1] != "server":
+        server = Server(sys.argv[2], 6969)
