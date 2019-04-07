@@ -1,6 +1,5 @@
 import socket
 import sys
-import atexit
 
 class Client:
     def __init__(self, ip, port):
@@ -16,7 +15,6 @@ class Client:
 
     def close(self):
         self.sock.close()
-        print "exit"
 
     def send_data(self):
         try:
@@ -58,7 +56,6 @@ class Server:
 
     def close(self):
         self.sock.close()
-        print "exit"
 
     def connection_loop(self):
         while True:
@@ -84,13 +81,21 @@ class Server:
                 connection.close()
 
 if __name__ == '__main__':
-    client = ""
-    server = ""
+    try:
+        client = ""
+        server = ""
 
-    if sys.argv[1] != "":
-        if sys.argv[1] == "client":
-            client = Client(sys.argv[2], 6969)
-            atexit.register(client.close)
-        elif sys.argv[1] == "server":
-            server = Server(sys.argv[2], 6969)
-            atexit.register(server.close)
+        if sys.argv[1] != "":
+            if sys.argv[1] == "client":
+                client = Client(sys.argv[2], 6969)
+            elif sys.argv[1] == "server":
+                server = Server(sys.argv[2], 6969)
+
+    except KeyboardInterrupt:
+        pass
+    finally:
+        if client != "":
+            client.close()
+        if server != "":
+            server.close()
+        print "Socket Closed"
