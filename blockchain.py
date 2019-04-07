@@ -66,6 +66,7 @@ class Server:
 
             # Wait for a connection
             connection, client_address = self.sock.accept()
+
             try:
                 newClientThread = self.receiving_loop(ClientModel(str(idCounter), client_address, connection))
                 newClientThread.start()
@@ -73,6 +74,9 @@ class Server:
 
                 idCounter += 1
                 print "client connected"
+                
+            finally:
+                break
 
     def receiving_loop(self, client):
             try:
