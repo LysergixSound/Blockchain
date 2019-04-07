@@ -1,3 +1,5 @@
+import json
+
 class BlockModel:
     def __init__(self, previous_hash, public_id, message, signature, proof, difficulty):
         self.previous_hash = previous_hash
