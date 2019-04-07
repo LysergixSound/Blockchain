@@ -66,12 +66,13 @@ class Server:
 
             # Wait for a connection
             connection, client_address = self.sock.accept()
-            newClientThread = self.receiving_loop(ClientModel(str(idCounter), client_address, connection))
-            newClientThread.start()
-            self.threads.append(newClientThread)
+            try:
+                newClientThread = self.receiving_loop(ClientModel(str(idCounter), client_address, connection))
+                newClientThread.start()
+                self.threads.append(newClientThread)
 
-            idCounter += 1
-            print "client connected"
+                idCounter += 1
+                print "client connected"
 
     def receiving_loop(self, client):
             try:
