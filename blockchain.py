@@ -36,7 +36,7 @@ class Client:
                 hex_dig = hash_object.hexdigest()
 
 
-                block = BlockModel(hex_dig, "testid", "hello", "", 0, 2)
+                block = BlockModel(hex_dig, "testid", "hello", "", 0, 1)
                 print block.toJSON()
                 time.sleep(5)
                 counter = 2
@@ -46,10 +46,10 @@ class Client:
                     print proofResult + "\n"
 
                     tempResult = ""
-                    for x in range(0, 2):
+                    for x in range(0, 1):
                         tempResult = tempResult + "0"
 
-                    if proofResult[:2] == tempResult:
+                    if proofResult[:1] == tempResult:
                         break
 
                     counter += 1
