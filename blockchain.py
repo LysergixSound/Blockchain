@@ -79,7 +79,9 @@ class Server:
                 while True:
                     data = client.connection.recv(1024)
                     if data:
-                        print >>sys.stderr, "Received " + client.address + " ID:" + client.id + ": " + data
+                        print >>sys.stderr, "Received " + client.address + " ID:" + client.id
+                        print >>sys.stderr, data
+                        print ""
                     else:
                         print >>sys.stderr, 'no more data from', client.address
                         break
