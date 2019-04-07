@@ -32,14 +32,12 @@ class Client:
         try:
             while True:
                 # Send data
-                difficulty = 2
+                difficulty = 3
                 hash_object = hashlib.sha256('genesis')
                 hex_dig = hash_object.hexdigest()
 
 
                 block = BlockModel(hex_dig, "testid", "hello", "", 0, 1)
-                print block.toJSON()
-                time.sleep(5)
                 counter = 0
                 while True:
                     proofResult = hex_dig + str(counter)
@@ -53,13 +51,15 @@ class Client:
                         tempResult = tempResult + "0"
 
                     if proofResult[:difficulty] == tempResult:
+                        block.proof = counter
+                        block.difficulty = difficulty
                         break
 
                     counter += 1
 
 
                 print >>sys.stderr, block.toJSON()
-                # self.sock.sendall(block)
+                self.sock.sendall(block.toJSON())
 
                 time.sleep(10)
 
