@@ -35,12 +35,25 @@ class Client:
                 hash_object = hashlib.sha256(b'genesis')
                 hex_dig = hash_object.hexdigest()
 
+
                 block = BlockModel(hex_dig, "testid", "hello", "", 0, 2)
                 print block.toJSON()
+                time.sleep(5)
                 counter = 2
                 while True:
-                    print hex_dig * counter
+                    proofResult = hex_dig * counter
+                    proofResult = str(proofResult)
+                    print proofResult + "\n"
+
+                    tempResult = ""
+                    for x in range(0, difficulty):
+                        tempResult = tempResult + "0"
+
+                    if proofResult[:difficulty] == tempResult:
+                        break
+
                     counter += 1
+
 
                 print >>sys.stderr, block.toJSON()
                 self.sock.sendall(block)
