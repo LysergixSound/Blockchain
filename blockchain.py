@@ -52,9 +52,6 @@ class Server:
         print >>sys.stderr, 'starting up on %s port %s' % self.server_address
         self.sock.bind(self.server_address)
 
-        # Listen for incoming connections
-        self.sock.listen(1)
-
         # Start Connection Loop
         self.connection_loop()
 
@@ -64,6 +61,9 @@ class Server:
     def connection_loop(self):
         idCounter = 0
         while True:
+            # Listen for incoming connections
+            self.sock.listen(1)
+
             # Wait for a connection
             connection, client_address = self.sock.accept()
             newClientThread = self.receiving_loop(ClientModel(str(idCounter), client_address, connection))
