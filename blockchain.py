@@ -32,18 +32,20 @@ class Client:
         try:
             while True:
                 # Send data
-                hash_object = hashlib.sha256(b'genesis')
+                hash_object = hashlib.sha256('genesis')
                 hex_dig = hash_object.hexdigest()
 
 
                 block = BlockModel(hex_dig, "testid", "hello", "", 0, 1)
                 print block.toJSON()
                 time.sleep(5)
-                counter = 2
+                counter = 0
                 while True:
-                    proofResult = float.fromhex(hex_dig) * counter
-                    proofResult = str(proofResult)
-                    print proofResult[2:] + "\n"
+                    proofResult = hex_dig + counter
+                    hash_object = hashlib.sha256(proofResult)
+                    proofResult = hash_object.hexdigest()
+
+                    print proofResult[:2] + "\n"
 
                     tempResult = ""
                     for x in range(0, 1):
