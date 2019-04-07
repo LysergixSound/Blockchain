@@ -6,7 +6,7 @@ import json
 import hashlib
 from collections import namedtuple
 
-import Modules
+from Modules.dotp2p import API
 from Models.clientmodel import ClientModel
 from Models.blockmodel import BlockModel
 
@@ -55,7 +55,7 @@ class Client:
 class Server:
     def __init__(self, host, port):
         self.nodes = []
-        self.api = dotp2p.API()
+        self.api = API()
 
         self.host = host
         self.port = port
