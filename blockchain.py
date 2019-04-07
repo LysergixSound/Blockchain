@@ -11,6 +11,8 @@ class Client:
         print >>sys.stderr, 'connecting to %s port %s' % self.server_address
         self.sock.connect(self.server_address)
 
+        self.send_data()
+        
     def send_data(self):
         try:
 
