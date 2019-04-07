@@ -46,7 +46,7 @@ class Client:
                     print proofResult + "\n"
 
                     tempResult = ""
-                    for x in range(0, difficulty):
+                    for x in range(0, 2):
                         tempResult = tempResult + "0"
 
                     if proofResult[:2] == tempResult:
