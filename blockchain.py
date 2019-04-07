@@ -1,5 +1,6 @@
 import socket
 import sys
+import atexit
 
 class Client:
     def __init__(self, ip, port):
@@ -81,21 +82,13 @@ class Server:
                 connection.close()
 
 if __name__ == '__main__':
-    try:
-        client = ""
-        server = ""
+    client = ""
+    server = ""
 
-        if sys.argv[1] != "":
-            if sys.argv[1] == "client":
-                client = Client(sys.argv[2], 6969)
-            elif sys.argv[1] == "server":
-                server = Server(sys.argv[2], 6969)
-
-    except KeyboardInterrupt:
-        pass
-    finally:
-        if client != "":
-            client.close()
-        if server != "":
-            server.close()
-        print "Socket Closed"
+    if sys.argv[1] != "":
+        if sys.argv[1] == "client":
+            client = Client(sys.argv[2], 6969)
+            atexit.register(client.close)
+        elif sys.argv[1] == "server":
+            server = Server(sys.argv[2], 6969)
+            atexit.register(server.close)
