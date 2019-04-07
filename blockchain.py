@@ -41,7 +41,7 @@ class Client:
                 time.sleep(5)
                 counter = 0
                 while True:
-                    proofResult = hex_dig + counter
+                    proofResult = hex_dig + str(counter)
                     hash_object = hashlib.sha256(proofResult)
                     proofResult = hash_object.hexdigest()
 
