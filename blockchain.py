@@ -3,14 +3,14 @@ import sys
 
 
 class Client:
-    def __init__(self):
+    def __init__(self, ip, port):
         # Create a TCP/IP socket
         self.sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
         # Connect the socket to the port where the server is listening
-        self.server_address = ('localhost', 696969)
+        self.server_address = (ip, port)
         print >>sys.stderr, 'connecting to %s port %s' % self.server_address
-        self.sock.connect(server_address)
+        self.sock.connect(self.server_address)
 
     def send_data(self):
         try:
@@ -33,18 +33,19 @@ class Client:
             print >>sys.stderr, 'closing socket'
             self.sock.close()
 
+
 class Server:
-    def __init__(self):
+    def __init__(self, ip, port):
         # Create a TCP/IP socket
         self.sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
         # Bind the socket to the port
-        self.server_address = ('localhost', 696969)
-        print >>sys.stderr, 'starting up on %s port %s' % server_address
-        sock.bind(server_address)
+        self.server_address = (ip, port)
+        print >>sys.stderr, 'starting up on %s port %s' % self.server_address
+        self.sock.bind(self.server_address)
 
         # Listen for incoming connections
-        sock.listen(1)
+        self.sock.listen(1)
 
         # Start Connection Loop
         self.connection_loop()
@@ -71,4 +72,3 @@ class Server:
 
             finally:
                 # Clean up the connection
-                connection.close()
