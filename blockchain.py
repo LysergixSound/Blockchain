@@ -96,7 +96,7 @@ class Server:
                     # Set the response to echo back the recieved data
                     block = json.loads(data, object_hook=lambda d: namedtuple('X', d.keys())(*d.values()))
                     print block
-                    # print self.api.verifiyData(block)
+                    print self.api.verifiyData(block)
                 else:
                     raise error('Client disconnected')
             except:
