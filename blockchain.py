@@ -1,5 +1,6 @@
 import socket
 import sys
+import time
 from threading import Thread
 
 class ClientModel:
@@ -78,9 +79,9 @@ class Server:
                 while True:
                     data = client.connection.recv(1024)
                     if data:
-                        print >>sys.stderr, "Received " + client.client_address + " ID:" + client.id + ": " + data
+                        print >>sys.stderr, "Received " + client.address + " ID:" + client.id + ": " + data
                     else:
-                        print >>sys.stderr, 'no more data from', client.client_address
+                        print >>sys.stderr, 'no more data from', client.address
                         break
 
             finally:
