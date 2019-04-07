@@ -19,13 +19,10 @@ class API:
             return False
 
     def proofOfWork(self, block):
-        hex_dig = hashlib.sha256(block.previous_hash).hexdigest()
-
         counter = 0
         while True:
-            proofResult = hex_dig + str(counter)
-            hash_object = hashlib.sha256(proofResult)
-            proofResult = hash_object.hexdigest()
+            proofResult = block.previous_hash + str(counter)
+            proofResult = hashlib.sha256(proofResult).hexdigest()
 
             tempResult = ""
             for x in range(0, self.difficulty):
