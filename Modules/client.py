@@ -36,8 +36,10 @@ class Client:
                 if data:
                     self.api.clientRequest(data)
                 else:
+                    print "error"
                     raise error('Server disconnected')
             except:
+                print "error"
                 sock.close()
                 return False
 
