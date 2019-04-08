@@ -45,9 +45,9 @@ class Client:
         sock.sendall(data)
 
     def send_all(self, data):
-        for sock in neighbourSockets:
+        for sock in self.neighbourSockets:
             self.send(sock, data)
 
     def close(self):
-        for sock in neighbourSockets:
+        for sock in self.neighbourSockets:
             sock.close()
