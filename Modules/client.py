@@ -27,7 +27,7 @@ class Client:
     def listenToServer(self, sock, nonce):
         size = 1024
         while self.listenLoop:
-            self.send_all("heartbeat")
+            self.send(sock, "heartbeat")
             try:
                 data = sock.recv(size)
                 if data:
