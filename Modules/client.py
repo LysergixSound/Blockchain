@@ -33,9 +33,8 @@ class Client:
             sock.sendall("heartbeat")
             try:
                 data = sock.recv(size)
-                print data
                 if data:
-                    self.api.ClientRequest(data)
+                    self.api.clientRequest(data)
                 else:
                     raise error('Server disconnected')
             except:
