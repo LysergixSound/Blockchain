@@ -24,10 +24,13 @@ class Client:
             self.neighbourSockets.append(sock)
             threading.Thread(target = self.listenToServer,args = (sock, "")).start()
 
+        while self.listenLoop:
+            time.sleep(5)
+
     def listenToServer(self, sock, nonce):
         size = 1024
         while self.listenLoop:
-            # self.send(sock, "heartbeat")
+            self.send(sock, "heartbeat")
             try:
                 data = sock.recv(size)
                 if data:
