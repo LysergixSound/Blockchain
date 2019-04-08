@@ -17,7 +17,7 @@ class Client:
         self.test_send_data_loop()
 
     def listen(self):
-        for neighbour in neighbours:
+        for neighbour in self.neighbours:
             sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
             sock.connect((neighbour.ip, neighbours.port))
             self.neighbourSockets.append(sock)

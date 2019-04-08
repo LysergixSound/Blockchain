@@ -4,7 +4,6 @@ import threading
 
 from Modules.api import API
 
-
 class Server:
     def __init__(self, host, port):
         self.neighbours = []
