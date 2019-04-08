@@ -1,8 +1,9 @@
 import hashlib
 
 class API:
-    def __init__(self, difficulty):
+    def __init__(self, p2p, difficulty):
         self.difficulty = difficulty
+        self.p2p = p2p
 
     def verifiyData(self, block):
         proofResult = block.previous_hash + str(block.proof)
@@ -34,6 +35,12 @@ class API:
                 block.difficulty = self.difficulty
                 break
 
-            counter += 3
+            counter += 1
 
         return block
+
+    def serverRequest(self, data):
+        print data
+
+    def clientRequest(self, data):
+        print data
