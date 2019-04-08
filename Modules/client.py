@@ -38,7 +38,7 @@ class Client:
 
     def test_send_data_loop(self):
         while True:
-            send_all("heartbeat")
+            self.send_all("heartbeat")
             time.sleep(2)
 
     def send(self, sock, data):
