@@ -8,6 +8,7 @@ class Server:
     def __init__(self, host, port):
         self.neighbours = []
         self.api = API(self, 4)
+        self.listenLoop = False
 
         self.host = host
         self.port = port
@@ -17,8 +18,9 @@ class Server:
         self.listen()
 
     def listen(self):
+        self.listenLoop = True
         self.sock.listen(5)
-        while True:
+        while self.listenLoop:
             client, address = self.sock.accept()
             client.settimeout(60)
             threading.Thread(target = self.listenToClient,args = (client,address)).start()
@@ -34,11 +36,19 @@ class Server:
                     # print block
                     # print self.api.verifiyData(block)
                     self.api.serverRequest(data)
+                    self.send(client, data)
                 else:
                     raise error('Client disconnected')
             except:
                 client.close()
                 return False
 
+    def send(self, client, data):
+        client.sendall(data)
+
+    def send_all(self, data):
+        self.sock.sendall(sock, data)
+
     def close(self):
+        self.listenLoop = False
         self.sock.close()

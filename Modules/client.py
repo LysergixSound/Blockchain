@@ -12,11 +12,13 @@ class Client:
         self.api = API(self, 4)
         self.neighbours = neighbours
         self.neighbourSockets = []
+        self.listenLoop = False
 
         self.listen()
         self.test_send_data_loop()
 
     def listen(self):
+        self.listenLoop = True
         for neighbour in self.neighbours:
             sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
             sock.connect((neighbour.ip, neighbour.port))
@@ -25,7 +27,7 @@ class Client:
 
     def listenToServer(self, sock, nonce):
         size = 1024
-        while True:
+        while self.listenLoop:
             try:
                 data = sock.recv(size)
                 if data:
@@ -49,5 +51,6 @@ class Client:
             self.send(sock, data)
 
     def close(self):
+        self.listenLoop = False
         for sock in self.neighbourSockets:
             sock.close()
