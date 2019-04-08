@@ -1,6 +1,7 @@
 import socket
 import sys
 import threading
+import time
 
 from Modules.api import API
 
@@ -41,8 +42,9 @@ class Server:
                     raise error('Client disconnected')
             except:
                 client.close()
-                self.listenLoop = False
                 return False
+
+            time.sleep(0.25)
 
     def send(self, client, data):
         client.sendall(data)

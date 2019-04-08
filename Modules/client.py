@@ -41,6 +41,8 @@ class Client:
                 sock.close()
                 return False
 
+            time.sleep(0.25)
+
     def send(self, sock, data):
         sock.sendall(data)
 
