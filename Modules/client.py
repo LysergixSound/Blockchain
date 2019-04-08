@@ -15,7 +15,6 @@ class Client:
         self.listenLoop = False
 
         self.listen()
-        self.test_send_data_loop()
 
     def listen(self):
         self.listenLoop = True
@@ -29,6 +28,7 @@ class Client:
         size = 1024
         while self.listenLoop:
             try:
+                self.send_all("heartbeat")
                 data = sock.recv(size)
                 if data:
                     self.api.ClientRequest(data)
@@ -37,11 +37,6 @@ class Client:
             except:
                 sock.close()
                 return False
-
-    def test_send_data_loop(self):
-        while True:
-            self.send_all("heartbeat")
-            time.sleep(2)
 
     def send(self, sock, data):
         sock.sendall(data)
