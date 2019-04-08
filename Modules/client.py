@@ -1,6 +1,7 @@
 import socket
 import sys
 import threading
+import time
 
 from Modules.api import API
 from Models.neighbourmodel import NeighbourModel
@@ -13,6 +14,7 @@ class Client:
         self.neighbourSockets = []
 
         self.listen()
+        self.test_send_data_loop()
 
     def listen(self):
         for neighbour in neighbours:
@@ -33,6 +35,11 @@ class Client:
             except:
                 sock.close()
                 return False
+
+    def test_send_data_loop(self):
+        while True:
+            send_all("heartbeat")
+            time.sleep(2)
 
     def send(self, sock, data):
         sock.sendall(data)
