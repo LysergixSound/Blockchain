@@ -37,6 +37,7 @@ class Server:
                     # print self.api.verifiyData(block)
                     self.api.serverRequest(data)
                     client.sendall(data)
+                    print "send echo"
                 else:
                     raise error('Client disconnected')
             except:

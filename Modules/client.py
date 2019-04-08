@@ -30,9 +30,10 @@ class Client:
     def listenToServer(self, sock, nonce):
         size = 1024
         while self.listenLoop:
-            self.send(sock, "heartbeat")
+            sock.sendall("heartbeat")
             try:
                 data = sock.recv(size)
+                print data
                 if data:
                     self.api.ClientRequest(data)
                 else:
