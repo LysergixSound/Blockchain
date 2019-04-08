@@ -19,7 +19,7 @@ class Client:
     def listen(self):
         for neighbour in self.neighbours:
             sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-            sock.connect((neighbour.ip, neighbours.port))
+            sock.connect((neighbour.ip, neighbour.port))
             self.neighbourSockets.append(sock)
             threading.Thread(target = self.listenToServer,args = (sock)).start()
 
