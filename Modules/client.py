@@ -3,7 +3,7 @@ import sys
 import threading
 
 from Modules.api import API
-from Modules.neighbourmodel import NeighbourModel
+from Models.neighbourmodel import NeighbourModel
 
 
 class Client:
