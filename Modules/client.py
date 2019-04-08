@@ -21,19 +21,19 @@ class Client:
             sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
             sock.connect((neighbour.ip, neighbour.port))
             self.neighbourSockets.append(sock)
-            threading.Thread(target = self.listenToServer,args = (sock)).start()
+            threading.Thread(target = self.listenToServer,args = (sock, "")).start()
 
     def listenToServer(self, sock):
         size = 1024
         while True:
             try:
-                data = sock.recv(size)
+                data = sock[0].recv(size)
                 if data:
                     self.api.ClientRequest(data)
                 else:
                     raise error('Server disconnected')
             except:
-                sock.close()
+                sock[0].close()
                 return False
 
     def test_send_data_loop(self):
