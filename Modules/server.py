@@ -41,6 +41,7 @@ class Server:
                     raise error('Client disconnected')
             except:
                 client.close()
+                self.listenLoop = False
                 return False
 
     def send(self, client, data):
